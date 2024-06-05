@@ -146,7 +146,7 @@
     <div class="row justify-content-center">
       <div class="col-md-6">
         <div class="input-group">
-          <input type="date" class="form-control" id="date">
+          <input type="date" class="form-control" id="date" value="<?= date('Y-m-d') ?>">
           <div class="input-group-append">
             <button id="btn" class="btn"><span>Get Data</span></button>
             &nbsp;&nbsp;
@@ -194,6 +194,7 @@
           success: function(response){
             var data=response;
             rdata = data;
+            console.log(data);
             $("#data").empty();
             for (var i = 0; i < data.length; i++) {
               $("#data").append("<tr><td>"+data[i].id+"</td><td>"+data[i].time+"</td></tr>");
@@ -201,12 +202,15 @@
           },
           complete: function(){
             $("#loader").hide(); // Hide loader when AJAX request is complete
+            //$("#hit").trigger("click");
           },
           error: function(xhr, textStatus, errorThrown) { 
             console.log("error: " + errorThrown + ", " + textStatus + ", " + xhr);
           }
         });
       });
+
+      
       $("#hit").click(function(){
         if (rdata == '') {
           alert("No data to export");
@@ -227,6 +231,11 @@
           })
       })
     });
+
+
+    // setInterval(() => {
+    //   $("#btn").trigger("click");
+    // }, 20000);
   </script>
 </body>
 </html>

@@ -16,6 +16,7 @@ function retrieveAttendance($ip, $port, $startTime, $endTime)
     $zk->connect();
     $zk->disableDevice();
     $attendance = $zk->getAttendance();
+    $users = $zk->getUser();
     $zk->enableDevice();
     $zk->disconnect();
 
@@ -28,7 +29,18 @@ function retrieveAttendance($ip, $port, $startTime, $endTime)
         }
     }
 
-    return $filteredAttendance;
+    // Filter users and match them with the filtered attendance data
+    $filteredUsers = array();
+    foreach ($filteredAttendance as $at) {
+        foreach ($users as $user) {
+            if ($user['uid'] == $at[0]) {
+                $filteredUsers[] = array('uid' => $at[0], 'name' => $user['name'], 'datetime' => $at[3]);
+                break;
+            }
+        }
+    }
+
+    return $filteredUsers;
 }
 
 // Define the start and end times for the time range (in Unix timestamp format)
@@ -43,9 +55,8 @@ $endTime = strtotime('2024-03-12 23:59:59');
         <thead>
             <tr>
                 <td width="25">No</td>
+                <td>Name</td>
                 <td>UID</td>
-                <td>ID</td>
-                <td>State</td>
                 <td>Date/Time</td>
             </tr>
         </thead>
@@ -59,12 +70,12 @@ $endTime = strtotime('2024-03-12 23:59:59');
             ?>
                 <tr>
                     <td align="right"><?php echo $no; ?></td>
-                    <td><?php echo $at[0]; ?></td>
-                    <td><?php echo $at[1]; ?></td>
-                    <td><?php echo $at[2]; ?></td>
-                    <td><?php echo $at[3]; ?></td>
+                    <td><?php echo $at['name']; ?></td>
+                    <td><?php echo $at['uid']; ?></td>
+                    <td><?php echo $at['datetime']; ?></td>
                 </tr>
             <?php } ?>
         </tbody>
     </table>
 <?php endforeach; ?>
+
