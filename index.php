@@ -140,9 +140,11 @@
       z-index: 1;
     }
   </style>
+  
 </head>
 <body>
   <div class="container">
+    <a href="user_info.php" class="btn btn-primary"><span>User Info</span></a>
     <div class="row justify-content-center">
       <div class="col-md-6">
         <div class="input-group">

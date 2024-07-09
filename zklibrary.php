@@ -1011,6 +1011,16 @@ class ZKLibrary {
 			return FALSE;
 		}
 	}
+	
+
+	public function dd($var){
+		echo "<pre>";
+		print_r($var);
+		echo "</pre>";
+		exit();
+
+
+	}
 	public function setUser($uid, $userid, $name, $password, $role)
 	{
 		$uid = (int) $uid;

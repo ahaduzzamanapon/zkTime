@@ -9,6 +9,7 @@ $devices = array(
     // Add more devices as needed
 );
 
+
 // Function to connect to a device, retrieve attendance data within a time range, and display it
 function retrieveAttendance($ip, $port, $startTime, $endTime)
 {
